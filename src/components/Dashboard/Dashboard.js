@@ -142,6 +142,7 @@ const Dashboard = () => {
                 </div>
             )}
             <ul>
+
                 {scrums.map((scrum) => (
                     <li key={scrum.id}>
                         {scrum.name}
