@@ -1,25 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import Dashboard from './components/Dashboard/Dashboard';
+import Login from './components/Login/Login';
+import UserProfile from './components/UserProfile/UserProfile';
+import SignUp from './components/Signup/SignUp';
+import { UserProvider, UserContext } from './context/UserContext';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <UserProvider>
+      <Router>
+        <div className="app">
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/profiles" element={<UserProfile />} />
 
+          </Routes>
+        </div>
+      </Router>
+    </UserProvider>
+  );
+};
+
+const Nav = () => {
+  const { user, logout } = useContext(UserContext);
+  const navigate = useNavigate(); // 
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login'); //
+  };
+
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Dashboard</Link>
+        </li>
+        {user ? (
+          <>
+            <li>
+              <Link to="/profiles">Profiles</Link>
+            </li>
+            <li>
+              <button onClick={handleLogout}>Logout</button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
+      </ul>
+    </nav>
+  );
+};
 export default App;
