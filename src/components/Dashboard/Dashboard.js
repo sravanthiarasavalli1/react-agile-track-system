@@ -146,7 +146,7 @@ const Dashboard = () => {
                 {scrums.map((scrum) => (
                     <li key={scrum.id}>
                         {scrum.name}
-                        <button onClick={() => handleGetDetails(scrum.id)}>Get Details</button>
+                        <button onClick={() => handleGetDetails(scrum.id)} >Get Details</button>
                     </li>
                 ))}
             </ul>
